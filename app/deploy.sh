@@ -1,20 +1,41 @@
 #!/bin/bash
 
 # Configuración
-REPO_URL="https://github.com/tu-usuario/tu-repo.git"  # Cambia esto por la URL de tu repositorio
+REPO_URL="https://github.com/fcongedo/deploy-nodejs-app.git"  # Cambia esto por la URL de tu repositorio
 APP_DIR="/var/www/mi-aplicacion"  # Ruta donde se desplegará la aplicación
 BRANCH="main"  # Rama del repositorio que se desplegará
 
 # Verifica si Node.js está instalado
-if ! command -v node &> /dev/null; then
-    echo "Node.js no está instalado. Por favor, instálalo antes de continuar."
-    exit 1
+if ! which node > /dev/null; then
+    echo "Node.js no está instalado. Instalando Node.js..."
+
+    # Instalación de Node.js en Ubuntu/Debian
+    curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+
+    # Verifica que la instalación fue exitosa
+    if ! which node > /dev/null; then
+        echo "Error al instalar Node.js. Abortando."
+        exit 1
+    fi
+else
+    echo "Node.js está instalado."
 fi
 
 # Verifica si pm2 está instalado, si no, lo instala
-if ! command -v pm2 &> /dev/null; then
-    echo "pm2 no está instalado. Instalándolo..."
+if ! which pm2 > /dev/null; then
+    echo "pm2 no está instalado. Instalando pm2..."
     npm install -g pm2
+else
+    echo "pm2 ya está instalado."
+fi
+
+# Verifica si git está instalado, si no, lo instala
+if ! which git > /dev/null; then
+    echo "git no está instalado. Instalando git..."
+    sudo apt-get install -y git
+else
+    echo "git ya está instalado."
 fi
 
 # Clonar o actualizar el repositorio
