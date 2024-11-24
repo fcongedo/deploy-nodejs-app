@@ -2,7 +2,7 @@
 
 # Configuración
 REPO_URL="https://github.com/fcongedo/deploy-nodejs-app.git"  # Cambia esto por la URL de tu repositorio
-APP_DIR="/var/www/mi-aplicacion"  # Ruta donde se desplegará la aplicación
+APP_DIR="/var/www/mi-aplicacion/app"  # Ruta donde se desplegará la aplicación
 BRANCH="main"  # Rama del repositorio que se desplegará
 
 # Verifica si Node.js está instalado
